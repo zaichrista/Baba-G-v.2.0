@@ -2,8 +2,8 @@ import { MENU_ITEMS, MENU_SECTIONS, MENU_ADDONS, BUILDER_SIDES } from './menu-da
 import { BOX_BASES, WRAP_BASES, clampQuantity, createConfig, normalizeConfig, setChoice, validateConfig, describeConfig, restoreSelections, needsHalloumiPrompt, withHalloumiChoice } from './menu-model.js';
 const byId = id => document.getElementById(id);
 const sectionButtons = [...document.querySelectorAll('.menu-category')];
-const wrapArt = document.querySelector('.wrap-silhouette').outerHTML;
-const bowlArt = document.querySelector('.bowl-silhouette').outerHTML;
+const wrapArt = byId('wrap-art').innerHTML;
+const bowlArt = byId('bowl-art').innerHTML;
 const configurations = new Map();
 let selectedItem;
 let pendingSelection = null;
@@ -28,6 +28,13 @@ function updatePreview() {
   byId('quantity-minus').disabled = quantity <= 1;
   byId('quantity-plus').disabled = quantity >= 20;
 }
+function setCustomisationOpen(open) {
+  byId('customiser-content').hidden = !open;
+  byId('customiser-toggle').setAttribute('aria-expanded', String(open));
+  byId('customiser-toggle').setAttribute('aria-label', open ? 'Minimise customisation' : 'Open customisation');
+  byId('customiser-toggle').textContent = open ? '−' : '+';
+}
+byId('customiser-toggle').addEventListener('click', () => setCustomisationOpen(byId('customiser-content').hidden));
 function clearStatus() { byId('selection-status').textContent = ''; }
 function countGroup(title, group, options) {
   const fieldset = el('fieldset', 'custom-fieldset');
@@ -171,6 +178,17 @@ function renderSavedSelections() {
   }
   document.querySelector('.saved-note').textContent = storageAvailable ? 'Saved on this device. Ordering coming soon.' : 'Saved for this visit. Ordering coming soon.';
 }
+document.querySelector('.selection-jump').addEventListener('click', event => {
+  event.preventDefault();
+  const panel = byId('customiser');
+  const receiptTop = byId('receipt').getBoundingClientRect().top - panel.getBoundingClientRect().top + panel.scrollTop;
+  panel.scrollTo({ top: Math.max(0, receiptTop - 58), behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+  byId('receipt-title').focus({ preventScroll: true });
+});
+document.querySelector('.skip').addEventListener('click', event => {
+  event.preventDefault();
+  byId('dish-list').focus({ preventScroll: true });
+});
 sectionButtons.forEach(button => button.addEventListener('click', () => selectSection(button.dataset.section)));
 byId('quantity-minus').addEventListener('click', () => { clearStatus(); currentConfig().quantity = clampQuantity(currentConfig().quantity - 1); updatePreview(); });
 byId('quantity-plus').addEventListener('click', () => { clearStatus(); currentConfig().quantity = clampQuantity(currentConfig().quantity + 1); updatePreview(); });
@@ -200,7 +218,7 @@ byId('customisation-form').addEventListener('submit', event => {
   if (pendingSelection || halloumiDialog.open) return;
   const config = normalizeConfig(selectedItem, currentConfig());
   const error = validateConfig(selectedItem, config);
-  if (error) { byId('selection-status').textContent = error; document.querySelector('input[name="fillings"]')?.focus(); return; }
+  if (error) { setCustomisationOpen(true); byId('selection-status').textContent = error; document.querySelector('input[name="fillings"]')?.focus(); return; }
   if (savedSelections.length >= 100) { byId('selection-status').textContent = 'Remove a saved selection before adding another.'; return; }
   if (needsHalloumiPrompt(selectedItem)) {
     pendingSelection = { item: selectedItem, config };
@@ -210,5 +228,8 @@ byId('customisation-form').addEventListener('submit', event => {
   }
   saveMeal(selectedItem, config);
 });
-selectSection('Wraps');
+const requested = new URLSearchParams(window.location.search);
+const requestedItem = MENU_ITEMS.find(item => item.id === requested.get('item'));
+selectSection(requestedItem?.section || (MENU_SECTIONS.includes(requested.get('section')) ? requested.get('section') : 'Wraps'));
+if (requestedItem) selectDish(requestedItem.id);
 renderSavedSelections();
