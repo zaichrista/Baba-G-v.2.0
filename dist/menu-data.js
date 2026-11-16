@@ -314,10 +314,10 @@ export const MENU_ADDONS = [
     "id": "item-37",
     "category": "Food",
     "section": "Add-ons",
-    "name": "Add Grilled Halloumi Cheese on Top",
+    "name": "Add Grilled Halloumi Cheese",
     "price": null,
     "image": null,
-    "label": "Grilled Halloumi Cheese on Top"
+    "label": "Grilled Halloumi Cheese"
   },
   {
     "id": "item-38",

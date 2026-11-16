@@ -1,11 +1,13 @@
 import { MENU_ITEMS, MENU_SECTIONS, MENU_ADDONS, BUILDER_SIDES } from './menu-data.js';
-import { BOX_BASES, WRAP_BASES, clampQuantity, createConfig, normalizeConfig, setChoice, validateConfig, describeConfig, restoreSelections } from './menu-model.js';
+import { BOX_BASES, WRAP_BASES, clampQuantity, createConfig, normalizeConfig, setChoice, validateConfig, describeConfig, restoreSelections, needsHalloumiPrompt, withHalloumiChoice } from './menu-model.js';
 const byId = id => document.getElementById(id);
 const sectionButtons = [...document.querySelectorAll('.menu-category')];
 const wrapArt = document.querySelector('.wrap-silhouette').outerHTML;
 const bowlArt = document.querySelector('.bowl-silhouette').outerHTML;
 const configurations = new Map();
 let selectedItem;
+let pendingSelection = null;
+const halloumiDialog = byId('halloumi-dialog');
 let savedSelections = [];
 let storageAvailable = true;
 try { savedSelections = restoreSelections(JSON.parse(localStorage.getItem('baba-menu-selections-v1') || '[]')); } catch { storageAvailable = false; }
@@ -31,7 +33,7 @@ function countGroup(title, group, options) {
   const fieldset = el('fieldset', 'custom-fieldset');
   fieldset.append(el('legend', '', title));
   options.forEach(option => {
-    const row = el('div', 'custom-option');
+    const row = el('div', 'custom-option' + (option.id === 'item-37' ? ' halloumi-option' : ''));
     const label = el('label', 'option-label');
     const input = el('input');
     input.type = 'checkbox';
@@ -69,7 +71,7 @@ function countGroup(title, group, options) {
 function renderCustomiser() {
   const config = currentConfig();
   byId('custom-product-name').textContent = selectedItem.name;
-  byId('customiser-title').textContent = selectedItem.builder ? 'BUILD YOUR OWN' : selectedItem.format === 'side' ? 'YOUR SELECTION' : 'MAKE IT YOURS';
+  byId('customiser-title').textContent = selectedItem.builder ? 'BUILD YOUR OWN' : selectedItem.format === 'side' ? 'YOUR SELECTION' : 'CUSTOMISATION';
   byId('builder-options').replaceChildren();
   byId('addon-options').replaceChildren();
   if (selectedItem.builder) {
@@ -150,7 +152,7 @@ function renderSavedSelections() {
   byId('selection-count').textContent = count;
   byId('saved-count').textContent = count;
   byId('saved-list').replaceChildren();
-  if (!savedSelections.length) byId('saved-list').append(el('p', 'empty-selection', 'Your favourites will appear here.'));
+  if (!savedSelections.length) byId('saved-list').append(el('p', 'empty-selection', 'Your saved meals will appear here.'));
   for (const entry of savedSelections) {
     const item = MENU_ITEMS.find(item => item.id === entry.itemId);
     const row = el('article', 'saved-dish');
@@ -163,26 +165,50 @@ function renderSavedSelections() {
       savedSelections = savedSelections.filter(saved => saved.id !== entry.id);
       persistSelections(); renderSavedSelections();
       byId('selection-status').textContent = `${item.name} removed.`;
-      document.querySelector('.saved-selections summary').focus();
+      byId('receipt-title').focus();
     });
     row.append(remove); byId('saved-list').append(row);
   }
-  document.querySelector('.saved-note').textContent = storageAvailable ? 'Saved on this device. This does not place an order.' : 'Saved for this visit. This does not place an order.';
+  document.querySelector('.saved-note').textContent = storageAvailable ? 'Saved on this device. Ordering coming soon.' : 'Saved for this visit. Ordering coming soon.';
 }
 sectionButtons.forEach(button => button.addEventListener('click', () => selectSection(button.dataset.section)));
 byId('quantity-minus').addEventListener('click', () => { clearStatus(); currentConfig().quantity = clampQuantity(currentConfig().quantity - 1); updatePreview(); });
 byId('quantity-plus').addEventListener('click', () => { clearStatus(); currentConfig().quantity = clampQuantity(currentConfig().quantity + 1); updatePreview(); });
 byId('sauce-note').addEventListener('input', event => { clearStatus(); currentConfig().sauce = event.target.value; updatePreview(); });
 byId('dish-notes').addEventListener('input', event => { clearStatus(); currentConfig().notes = event.target.value; updatePreview(); });
+function saveMeal(item, config) {
+  savedSelections.push({ id: globalThis.crypto?.randomUUID?.() || String(Date.now()) + '-' + Math.random().toString(16).slice(2), itemId: item.id, config });
+  configurations.set(item.id, normalizeConfig(item, config));
+  persistSelections(); renderSavedSelections();
+  if (selectedItem.id === item.id) updatePreview();
+  byId('selection-status').textContent = `${config.quantity} × ${item.name} saved${storageAvailable ? ' on this device' : ' for this visit'}.`;
+}
+function finishHalloumiChoice(accepted) {
+  if (!pendingSelection) return;
+  const { item, config } = pendingSelection;
+  pendingSelection = null;
+  const finalConfig = withHalloumiChoice(item, config, accepted);
+  halloumiDialog.close();
+  saveMeal(item, finalConfig);
+}
+byId('halloumi-yes').addEventListener('click', () => finishHalloumiChoice(true));
+byId('halloumi-next-time').addEventListener('click', () => finishHalloumiChoice(false));
+halloumiDialog.addEventListener('cancel', () => { pendingSelection = null; });
+halloumiDialog.addEventListener('close', () => { pendingSelection = null; });
 byId('customisation-form').addEventListener('submit', event => {
   event.preventDefault();
+  if (pendingSelection || halloumiDialog.open) return;
   const config = normalizeConfig(selectedItem, currentConfig());
   const error = validateConfig(selectedItem, config);
   if (error) { byId('selection-status').textContent = error; document.querySelector('input[name="fillings"]')?.focus(); return; }
   if (savedSelections.length >= 100) { byId('selection-status').textContent = 'Remove a saved selection before adding another.'; return; }
-  savedSelections.push({ id: globalThis.crypto?.randomUUID?.() || String(Date.now()) + '-' + Math.random().toString(16).slice(2), itemId: selectedItem.id, config });
-  persistSelections(); renderSavedSelections();
-  byId('selection-status').textContent = `${config.quantity} × ${selectedItem.name} saved${storageAvailable ? ' on this device' : ' for this visit'}.`;
+  if (needsHalloumiPrompt(selectedItem)) {
+    pendingSelection = { item: selectedItem, config };
+    byId('halloumi-dish-name').textContent = selectedItem.name;
+    halloumiDialog.showModal();
+    return;
+  }
+  saveMeal(selectedItem, config);
 });
 selectSection('Wraps');
 renderSavedSelections();
