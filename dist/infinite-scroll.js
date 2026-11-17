@@ -39,6 +39,14 @@
   const buildFiller = () => {
     const nextCopy = next.cloneNode(true);
     strip(nextCopy);
+    // The loop joins the opening state, never a previously visited carousel colour.
+    nextCopy.style.backgroundColor = '#1e1e1e';
+    nextCopy.querySelectorAll('.c-promotions').forEach(n => n.style.setProperty('--promo-ink', 'var(--palette-paper)'));
+    nextCopy.querySelectorAll('.c-promotions_track,.c-promotion_media').forEach(n => n.style.transform = 'none');
+    nextCopy.querySelectorAll('.c-promotions_backsplash').forEach((n, i) => {
+      n.style.transform = 'translate(-50%,-50%) scale(' + (i === 0 ? 1 : 0) + ')';
+      n.style.zIndex = i === 0 ? '-10' : '-30';
+    });
     filler.replaceChildren(nextCopy);
   };
   buildFiller();

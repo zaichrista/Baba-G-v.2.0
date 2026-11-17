@@ -1,55 +1,65 @@
 (function(){
-  var root=document.documentElement;
-  function done(){root.classList.remove('g-smack-pending')}
-  var g=document.querySelector('.gold-frame .g-mark');
-  var hero=document.querySelector('.hero');
-  var reduced=window.matchMedia&&matchMedia('(prefers-reduced-motion:reduce)').matches;
-  if(!g||!hero||reduced||!g.animate||!root.classList.contains('g-smack-pending')){done();return}
-  var frame=g.parentNode,baba=frame.querySelector('.baba-mark'),lg=frame.querySelector('.lg-mark');
-  var IMPACT=520,DUR=1000;
-  var delay=root.classList.contains('is-entering')?1500:300;
-
-  setTimeout(function(){
-    // G: huge and invisible, slams down, squashes, rebounds
-    var ease='cubic-bezier(.75,0,1,.7)';
-    g.style.opacity='';
-    var a=g.animate([
-      {opacity:0,transform:'translateX(-50%) scale(9) rotate(-14deg)',easing:ease,offset:0},
-      {opacity:1,transform:'translateX(-50%) scale(9) rotate(-14deg)',easing:ease,offset:.04},
-      {opacity:1,transform:'translateX(-50%) scale(.82,.78) rotate(2deg)',easing:'ease-out',offset:IMPACT/DUR},
-      {transform:'translateX(-50%) scale(1.1,1.12) rotate(-1deg)',easing:'ease-in-out',offset:.72},
-      {transform:'translateX(-50%) scale(.97) rotate(.5deg)',offset:.86},
-      {opacity:1,transform:'translateX(-50%) scale(1) rotate(0)',offset:1}
-    ],{duration:DUR,fill:'backwards'});
-    root.classList.remove('g-smack-pending');
-    // BABA + LEBANESE GRILL stay hidden until the hit, then punch in
-    [baba,lg].forEach(function(el,i){
-      if(!el)return;
-      el.style.opacity='0';
-      setTimeout(function(){
-        el.style.opacity='';
-        el.animate([{opacity:0,filter:'blur(8px)'},{opacity:1,filter:'blur(0)'}],{duration:350,easing:'ease-out'});
-      },IMPACT+80+i*140);
-    });
-    setTimeout(impact,IMPACT);
-    a.onfinish=function(){};
-  },delay);
-
-  function impact(){
-    // screen shake: move the hero's contents (not the hero) so no edges peek through,
-    // using the independent `translate` property so each child's own transform is untouched
-    var kids=[].slice.call(hero.children).filter(function(k){return !k.classList.contains('smack-ring')&&!k.classList.contains('smack-flash')});
-    kids.forEach(function(k){
-      k.animate([
-        {translate:'0 0'},{translate:'-14px 10px'},{translate:'12px -9px'},
-        {translate:'-9px -6px'},{translate:'7px 6px'},{translate:'-3px 2px'},{translate:'0 0'}
-      ],{duration:420,easing:'ease-out'});
-    });
-    // shockwave
-    var ring=document.createElement('div');ring.className='smack-ring';frame.parentNode.appendChild(ring);
-    ring.animate([{opacity:.9,transform:'translate(-50%,-50%) scale(.2)',borderWidth:'14px'},{opacity:0,transform:'translate(-50%,-50%) scale(4)',borderWidth:'1px'}],{duration:800,easing:'cubic-bezier(.1,.7,.2,1)'}).onfinish=function(){ring.remove()};
-    // flash
-    var f=document.createElement('div');f.className='smack-flash';hero.appendChild(f);
-    f.animate([{opacity:.95},{opacity:0}],{duration:420,easing:'ease-out'}).onfinish=function(){f.remove()};
+  const root = document.documentElement;
+  const hero = document.querySelector('main > .hero');
+  const g = hero && hero.querySelector('.gold-frame .g-mark');
+  const reduced = matchMedia('(prefers-reduced-motion:reduce)');
+  const done = () => root.classList.remove('g-smack-pending');
+  if (!g || !g.animate || reduced.matches) { done(); return; }
+  const frame = g.parentNode;
+  const words = [frame.querySelector('.baba-mark'), frame.querySelector('.lg-mark')].filter(Boolean);
+  let animations = [], timer;
+  function reset(){
+    clearTimeout(timer);
+    animations.forEach(a => a.cancel());
+    animations = [];
+    hero.querySelectorAll('.smack-ring,.smack-flash').forEach(n => n.remove());
+    words.forEach(n => n.style.opacity = '');
+    done();
   }
+  function animate(el, frames, options){
+    const a = el.animate(frames, options);
+    animations.push(a);
+    return a;
+  }
+  function play(){
+    reset();
+    if (reduced.matches) return;
+    // One clock owns the hit, lettering and shake; delayed callbacks cannot drift apart.
+    animate(g, [
+      {opacity:0,transform:'translateX(-50%) scale(9) rotate(-14deg)',offset:0,easing:'cubic-bezier(.75,0,1,.7)'},
+      {opacity:1,transform:'translateX(-50%) scale(9) rotate(-14deg)',offset:.04,easing:'cubic-bezier(.75,0,1,.7)'},
+      {opacity:1,transform:'translateX(-50%) scale(.82,.78) rotate(2deg)',offset:.52,easing:'ease-out'},
+      {opacity:1,transform:'translateX(-50%) scale(1.1,1.12) rotate(-1deg)',offset:.72,easing:'ease-in-out'},
+      {opacity:1,transform:'translateX(-50%) scale(.97) rotate(.5deg)',offset:.86},
+      {opacity:1,transform:'translateX(-50%) scale(1) rotate(0)',offset:1}
+    ], {duration:1000,fill:'backwards'});
+    words.forEach((el,i) => animate(el, [{opacity:0,filter:'blur(8px)'},{opacity:1,filter:'blur(0)'}],
+      {delay:600+i*140,duration:350,easing:'ease-out',fill:'backwards'}));
+    Array.from(hero.children).forEach(el => animate(el,
+      [{translate:'0 0'},{translate:'-14px 10px'},{translate:'12px -9px'},{translate:'-9px -6px'},{translate:'7px 6px'},{translate:'-3px 2px'},{translate:'0 0'}],
+      {delay:520,duration:420,easing:'ease-out'}));
+    const ring = document.createElement('div'); ring.className='smack-ring'; hero.appendChild(ring);
+    animate(ring, [{opacity:.9,transform:'translate(-50%,-50%) scale(.2)',borderWidth:'14px'},
+      {opacity:0,transform:'translate(-50%,-50%) scale(4)',borderWidth:'1px'}],
+      {delay:520,duration:800,easing:'cubic-bezier(.1,.7,.2,1)'}).onfinish = () => ring.remove();
+    const flash = document.createElement('div'); flash.className='smack-flash'; hero.appendChild(flash);
+    animate(flash, [{opacity:.95},{opacity:0}], {delay:520,duration:420,easing:'ease-out'}).onfinish = () => flash.remove();
+  }
+  function schedule(){
+    reset();
+    if (reduced.matches) return;
+    root.classList.add('g-smack-pending');
+    timer = setTimeout(play, 150);
+  }
+  addEventListener('baba:page-ready', schedule);
+  addEventListener('pagehide', reset);
+  reduced.addEventListener('change', reset);
+  // Standalone loading and scripts served from cache follow the same path.
+  if (root.dataset.pageReady === 'true') schedule();
+  // If the transition library fails to load, still reveal and animate the logo.
+  addEventListener('load', () => {
+    if (root.dataset.pageReady === 'true') return;
+    if (!root.classList.contains('is-entering')) schedule();
+    else timer = setTimeout(() => { if (root.dataset.pageReady !== 'true') schedule(); }, 4200);
+  });
 })();

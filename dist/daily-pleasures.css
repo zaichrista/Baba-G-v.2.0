@@ -18,7 +18,7 @@
   }
   /* original page-level resets, scoped (zero specificity, same cascade as the standalone file) */
   :where(.o-section, .o-section *){box-sizing:border-box;margin:0;padding:0}
-  .o-section{background:var(--neutral-300);color:var(--primary-500);font-family:var(--font-body);line-height:1.5;font-size:16px}
+  .o-section{background:#1e1e1e;color:var(--primary-500);font-family:var(--font-body);line-height:1.5;font-size:16px}
   :where(.o-section img){display:block;max-width:100%}
 
   /* ---------- section ---------- */
@@ -133,8 +133,6 @@
 
   @media (prefers-reduced-motion:reduce){ .c-promotions_backsplash{transition:none} }
 
-  /* section sits on cream once the last (cream) circle has landed, so the next section continues seamlessly */
-  .o-section{background-color:#1e1e1e}
 
   /* final item: the "See our menu" button */
   .c-promotion--cta{justify-content:flex-start}

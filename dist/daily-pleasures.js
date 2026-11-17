@@ -26,10 +26,9 @@
   }
 
   /* ---------- 2. sizes ---------- */
-  let trackWidth = 0, itemWidth = 0;
+  let travel = 0;
   function measure(){
-    trackWidth = track.getBoundingClientRect().width;
-    itemWidth  = items[0].getBoundingClientRect().width;
+    travel = items.at(-1).offsetLeft - items[0].offsetLeft;
     const section = root.closest('.o-section');
     const cs = getComputedStyle(section);
     const pad = (parseFloat(cs.paddingTop) || 0) + (parseFloat(cs.paddingBottom) || 0);
@@ -47,6 +46,7 @@
   section.style.backgroundColor = COLOURS[0];
   root.style.setProperty('--promo-ink', SPLASH_INK[0]);
   function showSplash(initial){
+    gsap.killTweensOf(splashes);
     gsap.set(splashes, { zIndex: -30 });
     if (!initial) gsap.set(splashes[oldIndex], { zIndex: -20 });
     gsap.set(splashes[index], { zIndex: -10 });
@@ -56,7 +56,7 @@
     if (reduced || initial){ gsap.set(splashes[index], { scale: 1, xPercent: -50, yPercent: -50 }); done(); return; }
     gsap.fromTo(splashes[index],
       { scale: 0, xPercent: -50, yPercent: -50 },
-      { scale: 1, xPercent: -50, yPercent: -50, duration: .5, ease: 'power2.out', onComplete: done });
+      { scale: 1, xPercent: -50, yPercent: -50, duration: .5, ease: 'power2.out', overwrite: true, onComplete: done });
   }
   // gsap owns the transform now — drop the CSS fallback
   splashes.forEach(s => { s.style.transform = 'none'; gsap.set(s, { xPercent: -50, yPercent: -50, scale: 0 }); });
@@ -66,22 +66,21 @@
   }
 
   /* ---------- 4. DESKTOP: scroll drives x + rotation ---------- */
-  const xTo = gsap.quickTo(track, 'x', { duration: .1, ease: 'power3.out' });
-  const rotTo = medias.map(m => gsap.quickTo(m, 'rotation', { duration: .2, ease: 'power3.out' }));
+  function render(p, immediate = false){
+    if (!desktop.matches) return;
+    gsap.set(track, { x: -p * travel });
+    medias.forEach((m, i) => gsap.set(m, { rotation: reduced ? 0 : (i % 2 === 0 ? -1 : 1) * p * 180 * (items.length - 1) }));
+    index = getIndex(p);
+    if (index !== oldIndex || immediate){ showSplash(immediate); oldIndex = index; }
+  }
 
   ScrollTrigger.create({
     trigger: sticky,
     start: 'center center',
     endTrigger: root,
     end: 'bottom bottom',
-    onUpdate: self => {
-      if (!desktop.matches) return;
-      const p = self.progress;
-      xTo(-p * trackWidth + p * itemWidth);
-      rotTo.forEach((to, i) => to((i % 2 === 0 ? -1 : 1) * p * 180 * (items.length - 1)));
-      index = getIndex(p);
-      if (index !== oldIndex){ showSplash(); oldIndex = index; }
-    }
+    onUpdate: self => render(self.progress),
+    onRefresh: self => { measure(); render(self.progress, true); }
   });
 
   /* ---------- 5. MOBILE: scroll-snap carousel + buttons ---------- */
@@ -92,7 +91,7 @@
     items.forEach((el, i) => { const r = el.getBoundingClientRect(); const dd = Math.abs(r.left + r.width / 2 - mid); if (dd < d){ d = dd; best = i; } });
     return best;
   }
-  function goTo(i){ items[Math.max(0, Math.min(items.length - 1, i))].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' }); }
+  function goTo(i){ items[Math.max(0, Math.min(items.length - 1, i))].scrollIntoView({ behavior: reduced ? 'instant' : 'smooth', inline: 'center', block: 'nearest' }); }
   prev.addEventListener('click', () => goTo(slideNow() - 1));
   next.addEventListener('click', () => goTo(slideNow() + 1));
   let st;
@@ -105,10 +104,13 @@
   /* reset transforms when crossing the breakpoint */
   desktop.addEventListener('change', () => {
     gsap.set(track, { x: 0 }); medias.forEach(m => gsap.set(m, { rotation: 0 }));
+    index = desktop.matches ? 0 : Math.min(splashes.length - 1, slideNow());
+    showSplash(true); oldIndex = index;
     measure(); ScrollTrigger.refresh();
   });
 
   measure();
   showSplash(true);
   addEventListener('load', () => { measure(); ScrollTrigger.refresh(); });
+  document.fonts && document.fonts.ready.then(() => { measure(); ScrollTrigger.refresh(); });
 })();

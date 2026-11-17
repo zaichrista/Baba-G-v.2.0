@@ -1,7 +1,7 @@
-/* First-visit intro: the G SMACKS onto the page */
-html.g-smack-pending .gold-frame .g-mark,
-html.g-smack-pending .gold-frame .baba-mark,
-html.g-smack-pending .gold-frame .lg-mark{opacity:0}
+/* Every-load intro: the G SMACKS onto the page */
+html.g-smack-pending main > .hero .gold-frame .g-mark,
+html.g-smack-pending main > .hero .gold-frame .baba-mark,
+html.g-smack-pending main > .hero .gold-frame .lg-mark{opacity:0}
 .smack-ring{
   position:absolute;left:50%;top:48%;width:30%;aspect-ratio:1;border-radius:50%;
   border:6px solid var(--palette-accent);pointer-events:none;z-index:4;

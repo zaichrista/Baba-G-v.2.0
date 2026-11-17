@@ -91,12 +91,13 @@
   }
   document.addEventListener('click', (e) => {
     const a = e.target.closest('a[href]');
-    if (!a || busy || reduced) return;
+    if (!a || reduced) return;
     if (a.hasAttribute('data-transition-ignore') || a.target === '_blank' || a.download) return;
     if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
     const u = isInternalPageLink(a);
     if (!u) return;
     e.preventDefault();
+    if (busy) return;
 
     busy = true;
     stopTitle();
@@ -107,16 +108,21 @@
   });
 
   /* ---------- arriving on a page: it loads covered, then the curtain lifts ---------- */
+  function ready(){
+    document.documentElement.dataset.pageReady = 'true';
+    dispatchEvent(new Event('baba:page-ready'));
+  }
   function arrive(){
     let entering = false;
     try { entering = sessionStorage.getItem(ENTER_KEY) === '1'; sessionStorage.removeItem(ENTER_KEY); } catch (_) {}
     if (entering && !reduced){
       busy = true;
-      enter(() => { document.documentElement.classList.remove('is-entering'); busy = false; startTitle(routeKey()); });
+      enter(() => { document.documentElement.classList.remove('is-entering'); busy = false; startTitle(routeKey()); ready(); });
       document.documentElement.classList.remove('is-entering');   // paths are now filled by enter(); the cover class is no longer needed
     } else {
       document.documentElement.classList.remove('is-entering');
       startTitle(routeKey());
+      ready();
     }
   }
   // back/forward cache: a restored page may still show the covered state — reset it
@@ -126,6 +132,7 @@
       gsap.set(Object.values(layers), { attr: { d: bottomCollapsed } });
       gsap.set(labelWrap, { opacity: 0 });
       startTitle(routeKey());
+      ready();
     }
   });
 
