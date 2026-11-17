@@ -99,7 +99,7 @@
     e.preventDefault();
 
     busy = true;
-    stopTitle(); document.title = 'Craving...';
+    stopTitle();
     leave(() => {
       try { sessionStorage.setItem(ENTER_KEY, '1'); } catch (_) {}
       location.href = u.href;
@@ -129,16 +129,10 @@
     }
   });
 
-  /* ---------- cycling tab title ---------- */
-  let titleTimer;
+  /* ---------- static tab title ---------- */
   const pretty = k => k === 'home' ? SITE : k.charAt(0).toUpperCase() + k.slice(1);
-  function startTitle(key = 'home'){
-    stopTitle();
-    let i = 0;
-    const set = () => { document.title = `${pretty(key)} | ${TITLE_WORDS[i]}`; i = (i + 1) % TITLE_WORDS.length; };
-    set(); titleTimer = setInterval(set, 800);
-  }
-  function stopTitle(){ clearInterval(titleTimer); }
+  function startTitle(key = 'home'){ document.title = pretty(key); }
+  function stopTitle(){}
   startTitle();
   arrive();
 })();

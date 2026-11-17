@@ -1,0 +1,44 @@
+/* Shared by the opening hero and its footer copy. */
+.hero .reference-nav {
+  top:24px;left:50%;right:auto;transform:translateX(-50%);
+  flex-direction:row;justify-content:center;gap:36px;
+  width:max-content;max-width:calc(100% - 40px);
+  font-size:20px;line-height:1.25;
+}
+.hero .reference-nav a { padding:10px 0; }
+.hero-footer-info {
+  position:absolute;right:24px;bottom:24px;z-index:6;
+  max-width:260px;display:flex;flex-direction:column;align-items:flex-end;gap:8px;
+  color:#1e1e1e;text-align:right;font-size:13px;line-height:1.5;
+}
+.hero-footer-info address { margin:0;font-style:normal; }
+.hero-footer-info a { text-decoration:underline;text-underline-offset:3px; }
+.hero-footer-info small { font-size:11px; }
+@media(max-width:600px) {
+  .hero .reference-nav { top:14px;gap:24px;font-size:16px; }
+  .hero-footer-info { right:16px;bottom:20px;max-width:48%;gap:6px;font-size:12px; }
+  .hero .hero-hours { left:16px;bottom:20px;max-width:42%; }
+  .hero .hero-hours p { font-size:clamp(18px,5vw,26px); }
+  .hero .hero-next { bottom:140px; }
+}
+@media(max-height:700px) {
+  .hero .square-frame,.hero .gold-frame { top:43%;max-width:calc(86svh - 220px); }
+}
+
+/* Hero footer: copyright bottom-left, legal bottom-right */
+.hero-footer-info{
+  left:24px;right:24px;bottom:22px;max-width:none;
+  flex-direction:row;align-items:center;justify-content:space-between;gap:16px;
+  font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;
+}
+.hero-footer-info .hero-copy{font-size:11px;display:inline-flex;align-items:center;gap:10px}
+.hero-footer-info .hero-copy b{font-weight:800}
+.hero-legal{display:flex;gap:18px}
+.hero-legal a{position:relative;text-decoration:none;padding:4px 0}
+.hero-legal a::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:#f8af07;transform:scaleX(0);transform-origin:left;transition:transform .3s}
+.hero-legal a:hover::after,.hero-legal a:focus-visible::after{transform:scaleX(1)}
+@media(max-width:600px){.hero-footer-info{left:16px;right:16px;bottom:16px;font-size:9px;letter-spacing:.1em}.hero-footer-info .hero-copy{font-size:9px}}
+
+/* Opening hours: right edge, vertically centred */
+.hero .hero-hours{left:auto;right:24px;bottom:auto;top:50%;transform:translateY(-50%);text-align:right;max-width:none}
+@media(max-width:600px){.hero .hero-hours{right:12px;left:auto;top:50%;bottom:auto;max-width:34%}}

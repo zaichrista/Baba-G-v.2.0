@@ -1,0 +1,27 @@
+/* Persistent social tab, middle-left on every page */
+.social-tab{
+  position:fixed;left:0;top:50%;z-index:60;
+  transform:translateY(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:12px;
+  padding:14px 9px;background:#fff;
+  border-radius:0 16px 16px 0;
+  box-shadow:0 6px 24px rgba(30,30,30,.18),inset 0 0 0 1px rgba(30,30,30,.06);
+  animation:social-tab-in .7s cubic-bezier(.2,.8,.2,1) .4s both;
+}
+@keyframes social-tab-in{from{transform:translate(-100%,-50%)}to{transform:translate(0,-50%)}}
+.social-tab a{
+  width:38px;height:38px;border-radius:50%;
+  display:grid;place-items:center;
+  transition:transform .25s cubic-bezier(.2,.8,.2,1),box-shadow .25s;
+}
+.social-tab a:hover,.social-tab a:focus-visible{transform:scale(1.18) rotate(-6deg);box-shadow:0 4px 10px rgba(30,30,30,.25)}
+.social-tab svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.social-tab .st-gold{background:#f8af07;color:#1e1e1e}
+.social-tab .st-black{background:#1e1e1e;color:#f4ede1}
+.social-tab .st-cream{background:#f4ede1;color:#1e1e1e;box-shadow:inset 0 0 0 1px rgba(30,30,30,.25)}
+@media(max-width:600px){
+  .social-tab{padding:9px 6px;gap:8px}
+  .social-tab a{width:32px;height:32px}
+  .social-tab svg{width:17px;height:17px}
+}
+@media(prefers-reduced-motion:reduce){.social-tab{animation:none}}

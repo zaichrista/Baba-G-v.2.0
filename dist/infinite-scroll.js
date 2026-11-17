@@ -23,6 +23,7 @@
   copy.classList.add('hero-as-footer');
   copy.removeAttribute('aria-labelledby');
   copy.setAttribute('aria-label', 'Baba G');
+  copy.setAttribute('role', 'contentinfo');
   strip(copy);
   copy.querySelectorAll('h1').forEach(n => n.remove());            // one <h1> per page
   main.insertAdjacentElement('afterend', copy);
@@ -42,16 +43,6 @@
   };
   buildFiller();
 
-  const palettes = ['gold', 'red', 'green'];
-  const paletteFor = lap => palettes[((lap % palettes.length) + palettes.length) % palettes.length];
-  let currentPalette;
-  const setPalette = index => {
-    if (index === currentPalette) return;
-    currentPalette = index;
-    document.documentElement.dataset.palette = paletteFor(index);
-  };
-  setPalette(0);
-
   /* ============================ THE INFINITE SCROLL (as in the piece) ============================ */
   const lenis = new Lenis({
     duration: 1,
@@ -63,27 +54,15 @@
 
   /* loop length = distance from the hero to its copy (cached; recomputed on resize) */
   let loop = 0;
-  let paletteLead = 0;
-  const updatePalette = () => {
-    // Same trigger as Tripletta: footer.top <= viewportHeight - footer.height / 2.
-    // Both heroes inherit the new palette together; wrapping never changes it again.
-    // Unbounded scroll keeps this stable over multiple laps and when scrolling back.
-    if (loop > 0) setPalette(Math.floor((lenis.animatedScroll + paletteLead) / loop));
-  };
   const measure = () => {
     const heroTop = hero.getBoundingClientRect().top + scrollY;
     const copyTop = copy.getBoundingClientRect().top + scrollY;
     loop = copyTop - heroTop;
-    paletteLead = innerHeight - copy.offsetHeight * .5;
     filler.style.height = Math.max(0, innerHeight - copy.offsetHeight) + 'px';
-    updatePalette();
   };
   Object.defineProperty(lenis.dimensions, 'limit', { get: () => ({ x: 0, y: loop }) });
 
-  lenis.on('scroll', () => {
-    updatePalette();
-    ScrollTrigger.update();
-  });
+  lenis.on('scroll', ScrollTrigger.update);
   gsap.ticker.add(t => lenis.raf(t * 1000));
   gsap.ticker.lagSmoothing(0);
 

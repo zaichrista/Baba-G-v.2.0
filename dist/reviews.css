@@ -4,7 +4,7 @@
     --ink:#1e1e1e;          /* card text (maroon)  */
     --accent:#1e1e1e;       /* headline + stars    */
     --page:#1e1e1e;         /* page background behind the section */
-    --card:rgba(255,255,255,0.5);
+    --card:rgba(255,240,199,0.5); /* translucent gold tint, fixed across palettes */
     --font-display:'Archivo','Helvetica Neue',Arial,sans-serif;
     --font-body:'Archivo','Helvetica Neue',Arial,sans-serif;
   }

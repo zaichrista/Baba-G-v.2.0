@@ -32,29 +32,13 @@ function page() {
   return { root, context, listeners, scroll: value => { lenis.animatedScroll = value; lenis.callback(); } };
 }
 
-test('changes when half the returning hero is visible and remains stable at the seam', () => {
+test('keeps the palette fixed across forward and reverse loops and resizing', () => {
   const p = page();
-  for (const [position, palette] of [[0,'gold'],[9429,'gold'],[9430,'red'],[9999,'red'],[10000,'red'],[19429,'red'],[19430,'green'],[20000,'green'],[29430,'gold'],[30000,'gold']]) {
+  for (const position of [0, 9430, 10000, 19430, 20000, 30000, -571, -10000]) {
     p.scroll(position);
-    assert.equal(p.root.dataset.palette, palette, `scroll ${position}`);
+    assert.equal(p.root.dataset.palette, undefined, `scroll ${position}`);
   }
-});
-
-test('reverse scroll restores the previous palette without double changes', () => {
-  const p = page();
-  for (const [position,palette] of [[19430,'green'],[19429,'red'],[9430,'red'],[9429,'gold'],[-571,'green'],[-570,'gold']]) {
-    p.scroll(position);
-    assert.equal(p.root.dataset.palette,palette, `scroll ${position}`);
-  }
-});
-
-test('recomputes the trigger for viewport changes', () => {
-  const p = page();
-  p.scroll(9500);
-  assert.equal(p.root.dataset.palette, 'red');
   p.context.innerHeight = 800;
   p.listeners.resize();
-  assert.equal(p.root.dataset.palette, 'gold');
-  p.scroll(9630);
-  assert.equal(p.root.dataset.palette, 'red');
+  assert.equal(p.root.dataset.palette, undefined);
 });

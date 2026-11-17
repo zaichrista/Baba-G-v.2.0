@@ -5,9 +5,9 @@
 <title>El Sabor — A little taste of the good life</title>
 <meta name="description" content="A concept for El Sabor: Spanish-inspired small plates, long evenings, and good company.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css"><link rel="stylesheet" href="reference.css"><link rel="stylesheet" href="home-menu.css"><link rel="stylesheet" href="visit.css"><link rel="stylesheet" href="about.css"><link rel="stylesheet" href="transition.css"><link rel="stylesheet" href="daily-pleasures.css"><link rel="stylesheet" href="reviews.css"><link rel="stylesheet" href="closing-stack.css"><link rel="stylesheet" href="infinite-scroll.css"><link rel="stylesheet" href="palette.css">
+<link rel="stylesheet" href="style.css"><link rel="stylesheet" href="reference.css"><link rel="stylesheet" href="home-menu.css"><link rel="stylesheet" href="visit.css"><link rel="stylesheet" href="about.css"><link rel="stylesheet" href="transition.css"><link rel="stylesheet" href="daily-pleasures.css"><link rel="stylesheet" href="reviews.css"><link rel="stylesheet" href="closing-stack.css"><link rel="stylesheet" href="infinite-scroll.css"><link rel="stylesheet" href="palette.css"><link rel="stylesheet" href="hero-layout.css">
 <script>try{if(sessionStorage.getItem("baba-transition-entering")==="1"){document.documentElement.classList.add("is-entering");setTimeout(function(){document.documentElement.classList.remove("is-entering")},4000)}}catch(e){}</script>
-</head>
+<script>try{if(!matchMedia("(prefers-reduced-motion:reduce)").matches){document.documentElement.classList.add("g-smack-pending");setTimeout(function(){document.documentElement.classList.remove("g-smack-pending")},4000)}}catch(e){}</script><link rel="stylesheet" href="smack.css"><link rel="stylesheet" href="social-tab.css"></head>
 <body>
 <a class="skip" href="#story">Skip to content</a>
 <main>
@@ -22,7 +22,11 @@
 <div class="photo-placeholder photo-four"><span class="photo-no">04 / THE CRAFT</span><svg viewBox="0 0 100 100" aria-hidden="true"><path d="M24 57h52a26 18 0 0 1-52 0Zm52 0 12-10M38 42q-8-8 0-16m13 16q-8-8 0-16m13 16q-8-8 0-16M24 78h52"/></svg><span>Your image here</span></div>
 <nav class="reference-nav" aria-label="Main navigation"><a href="menu.html">Menu</a><a href="#visit">Book</a><a href="about.html">About</a><a href="#visit">Contact</a></nav>
 <div class="hero-hours"><span class="hero-hours-label">Opening hours</span><p><time datetime="11:00">11:00</time> to <time datetime="21:00">21:00</time></p></div>
-<a class="hero-next" href="#menu" aria-label="Explore our food">↓</a></section>
+<div class="hero-footer-info">
+<small class="hero-copy">&copy; 2026 <b>ZC Studios</b> &middot; Made with fire &amp; zaatar</small>
+<nav class="hero-legal" aria-label="Legal"><a href="careers.html">Careers</a><a href="catering.html">Catering</a></nav>
+</div>
+</section>
 <!-- PIECE 2: Daily Pleasures (replaces the menu teaser) -->
 <section class="o-section" id="menu">
   <div class="o-section_inner">
@@ -189,11 +193,11 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.9/dist/lenis.min.js"></script>
-<script src="palette.js"></script>
+<script src="palette.js"></script><script src="smack.js"></script>
 <script src="infinite-scroll.js"></script>
 <script src="transition.js"></script>
 <script src="daily-pleasures.js"></script>
 <script src="reviews.js"></script>
 <script src="closing-stack.js"></script>
 
-</body></html>
+<script src="social-tab.js"></script></body></html>

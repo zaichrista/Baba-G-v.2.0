@@ -1,24 +1,10 @@
-/* Muted butter, dusty rose and sage, each with two pale companion surfaces. */
-@property --palette-accent { syntax:"<color>";inherits:true;initial-value:#d8bc76; }
-@property --palette-paper { syntax:"<color>";inherits:true;initial-value:#fffcf4; }
-@property --palette-cream { syntax:"<color>";inherits:true;initial-value:#f3ead6; }
-:root,[data-palette="gold"] {
-  --palette-accent:#d8bc76;
-  --palette-paper:#fffcf4;
-  --palette-cream:#f3ead6;
+/* Fixed signature palette throughout the site, including every scroll loop. */
+:root {
+  --palette-accent:#f8af07;
+  --palette-paper:#fefefa;
+  --palette-cream:#f4ede1;
 }
-[data-palette="red"] {
-  --palette-accent:#d99598;
-  --palette-paper:#fff8f7;
-  --palette-cream:#f3e2df;
-}
-[data-palette="green"] {
-  --palette-accent:#9fb68e;
-  --palette-paper:#fafcf6;
-  --palette-cream:#e8eddf;
-}
-html { transition:--palette-accent .3s ease-in-out,--palette-paper .3s ease-in-out,--palette-cream .3s ease-in-out; }
-@media(prefers-reduced-motion:reduce) { html { transition:none; } }
+html { transition:none; }
 .hero { background:var(--palette-paper)!important; }
 /* Mask only the coloured artwork, leaving BABA and the brush stroke intact. */
 .gold-frame { background:none; }
