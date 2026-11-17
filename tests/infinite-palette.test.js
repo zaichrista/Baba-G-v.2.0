@@ -28,7 +28,7 @@ function page() {
     setTimeout() {}, clearTimeout() {},
     addEventListener: (event, callback) => { listeners[event] = callback; },
   };
-  vm.runInNewContext(readFileSync(new URL('../dist/infinite-scroll.js', import.meta.url), 'utf8'), context);
+  vm.runInNewContext(readFileSync(new URL('../infinite-scroll.js', import.meta.url), 'utf8'), context);
   return { root, context, listeners, scroll: value => { lenis.animatedScroll = value; lenis.callback(); } };
 }
 

@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { MENU_ITEMS, MENU_SECTIONS, MENU_ADDONS, BUILDER_SIDES } from '../dist/menu-data.js';
-import { createConfig, normalizeConfig, setChoice, validateConfig, describeConfig, restoreSelections, clampQuantity, needsHalloumiPrompt, withHalloumiChoice } from '../dist/menu-model.js';
+import { MENU_ITEMS, MENU_SECTIONS, MENU_ADDONS, BUILDER_SIDES } from '../menu-data.js';
+import { createConfig, normalizeConfig, setChoice, validateConfig, describeConfig, restoreSelections, clampQuantity, needsHalloumiPrompt, withHalloumiChoice } from '../menu-model.js';
 const wrap = MENU_ITEMS.find(item => item.section === 'Wraps');
 const box = MENU_ITEMS.find(item => item.section === 'Boxes');
 const customBox = MENU_ITEMS.find(item => item.id === 'build-box');

@@ -19,7 +19,7 @@ function intro({ reduced = false, ready = false } = {}) {
   const root = { dataset: ready ? { pageReady: 'true' } : {}, classList: {
     add: c => classes.add(c), remove: c => classes.delete(c), contains: c => classes.has(c),
   } };
-  vm.runInNewContext(readFileSync(new URL('../dist/smack.js', import.meta.url), 'utf8'), {
+  vm.runInNewContext(readFileSync(new URL('../smack.js', import.meta.url), 'utf8'), {
     document: { documentElement: root, querySelector: () => hero, createElement: element },
     matchMedia: () => ({ matches: reduced, addEventListener() {} }),
     addEventListener: (name, fn) => { listeners[name] = fn; },
@@ -75,7 +75,7 @@ function promotions() {
     killTweensOf() { active = []; },
     fromTo(target, from, to) { Object.assign(target, from); active.push(() => { Object.assign(target, to); to.onComplete(); }); },
   };
-  vm.runInNewContext(readFileSync(new URL('../dist/daily-pleasures.js', import.meta.url), 'utf8'), {
+  vm.runInNewContext(readFileSync(new URL('../daily-pleasures.js', import.meta.url), 'utf8'), {
     gsap, ScrollTrigger: { create: value => { trigger = value; }, refresh() {} },
     document: { getElementById: id => ({ promotions: root, sticky, track, 'curved-title': title })[id],
       querySelector: () => ({ addEventListener() {} }), documentElement: el() },
