@@ -1,0 +1,46 @@
+/* Muted butter, dusty rose and sage, each with two pale companion surfaces. */
+@property --palette-accent { syntax:"<color>";inherits:true;initial-value:#d8bc76; }
+@property --palette-paper { syntax:"<color>";inherits:true;initial-value:#fffcf4; }
+@property --palette-cream { syntax:"<color>";inherits:true;initial-value:#f3ead6; }
+:root,[data-palette="gold"] {
+  --palette-accent:#d8bc76;
+  --palette-paper:#fffcf4;
+  --palette-cream:#f3ead6;
+}
+[data-palette="red"] {
+  --palette-accent:#d99598;
+  --palette-paper:#fff8f7;
+  --palette-cream:#f3e2df;
+}
+[data-palette="green"] {
+  --palette-accent:#9fb68e;
+  --palette-paper:#fafcf6;
+  --palette-cream:#e8eddf;
+}
+html { transition:--palette-accent .3s ease-in-out,--palette-paper .3s ease-in-out,--palette-cream .3s ease-in-out; }
+@media(prefers-reduced-motion:reduce) { html { transition:none; } }
+.hero { background:var(--palette-paper)!important; }
+/* Mask only the coloured artwork, leaving BABA and the brush stroke intact. */
+.gold-frame { background:none; }
+.gold-frame::before {
+  content:"";position:absolute;inset:0;
+  background:var(--palette-accent);
+  mask:url("gold-box.svg") center/100% 100% no-repeat;
+  -webkit-mask:url("gold-box.svg") center/100% 100% no-repeat;
+}
+.gold-frame .g-mark,.gold-frame .lg-mark { background:var(--palette-accent); }
+.gold-frame .g-mark {
+  aspect-ratio:72.903/86.813;
+  mask:url("g-mark.svg") center/contain no-repeat;
+  -webkit-mask:url("g-mark.svg") center/contain no-repeat;
+}
+.gold-frame .lg-mark {
+  aspect-ratio:105.038/12.47;
+  mask:url("lebanese-grill-mark.svg") center/contain no-repeat;
+  -webkit-mask:url("lebanese-grill-mark.svg") center/contain no-repeat;
+}
+[fill="#f8af07" i] { fill:var(--palette-accent); }
+[fill="#fefefa" i] { fill:var(--palette-paper); }
+[fill="#f4ede1" i] { fill:var(--palette-cream); }
+.c-promotions_backsplash:nth-child(3n + 2) { --background-color:var(--palette-accent)!important; }
+.c-promotions_backsplash:nth-child(3n) { --background-color:var(--palette-cream)!important; }

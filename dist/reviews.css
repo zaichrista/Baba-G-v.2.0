@@ -1,0 +1,79 @@
+/* PIECE 3 — REVIEWS (wired in from 3-reviews.html) */
+  .reviews-scroll-section{
+    --bg:var(--palette-paper);           /* section background  */
+    --ink:#1e1e1e;          /* card text (maroon)  */
+    --accent:#1e1e1e;       /* headline + stars    */
+    --page:#1e1e1e;         /* page background behind the section */
+    --card:rgba(255,255,255,0.5);
+    --font-display:'Archivo','Helvetica Neue',Arial,sans-serif;
+    --font-body:'Archivo','Helvetica Neue',Arial,sans-serif;
+  }
+  :where(.reviews-scroll-section, .reviews-scroll-section *){box-sizing:border-box;margin:0;padding:0}
+  .reviews-scroll-section{font-family:var(--font-body);font-weight:500;color:var(--ink)}
+
+  /* ---------- section ---------- */
+  .reviews-scroll-section{
+    background:var(--bg);
+    padding:0 72px;
+    overflow:clip;                            /* clips rotated card corners WITHOUT becoming a scroll container (overflow:hidden would break the sticky headline) */
+    position:relative;
+  }
+  .e-con-inner{
+    width:100%;max-width:min(100%,1800px);margin-inline:auto;
+    display:flex;flex-direction:column;gap:32px;
+  }
+
+  /* the pinned headline block: one viewport tall, sticks to top while cards slide over it */
+  .reviews-title-wrap{
+    position:sticky;top:0;z-index:1;
+    height:100vh;height:100dvh;
+    display:flex;align-items:center;justify-content:center;
+    padding:128px 0;
+  }
+  .reviews-title{
+    position:absolute;top:50%;left:50%;
+    transform:translate(-50%,-50%);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    z-index:1;
+  }
+  .reviews-title h2{
+    font-family:var(--font-display);font-weight:400;
+    font-size:200px;line-height:160px;letter-spacing:-.03em;
+    color:var(--accent);text-align:center;white-space:nowrap;
+  }
+
+  /* the scrolling column of cards, sits on top of the headline */
+  .reviews-cards-wrap{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;
+    /* was 128px. Now half a window (+ room for the 6° tilt): by the time Find us + Opening hours fill the lower half of the
+       screen, the LAST review has completely left the top half. */
+    padding-bottom:calc(50vh + 80px);padding-bottom:calc(50svh + 80px)}
+  .reviews-list{display:flex;flex-direction:column;gap:128px;width:100%;align-items:center}
+  .review-item{width:100%;display:flex;justify-content:center}
+  .review-listing-item{
+    width:600px;max-width:100%;
+    display:flex;flex-direction:column;gap:48px;
+    padding:32px;border-radius:24px;
+    background:var(--card);
+    -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
+    will-change:transform;
+  }
+  /* GSAP writes its rotation into the same transform, so sideways offset is done with `x` in JS
+     (the CSS translateX above is only the no-JS fallback). */
+
+  .stars{display:flex;gap:4px}
+  .stars svg{width:16px;height:16px;fill:var(--accent);margin:0 2px 2px 0}
+  .stars svg.off{fill:rgba(30,30,30,0.2)}
+
+  .review-quote,.review-name{
+    font-family:var(--font-body);font-weight:500;font-size:16px;line-height:1.2;
+    letter-spacing:-.03em;text-transform:uppercase;
+  }
+  .review-quote{color:var(--ink)}
+  .review-name{color:rgba(30,30,30,0.314)}
+
+  @media (max-width:767px){
+    .reviews-scroll-section{padding:0 20px}
+    .reviews-title h2{font-size:clamp(84px,26vw,140px);line-height:.8}
+    .review-listing-item{padding:24px;gap:32px}
+    .reviews-list{gap:48px}
+  }

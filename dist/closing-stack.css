@@ -1,0 +1,13 @@
+/* REVIEWS + FIND US / OPENING HOURS — closing stage
+   Lower block (Find us + Opening hours) is pinned to the bottom of the window while the Reviews section lives in the
+   space above it: headline centred in that upper area, cards scroll up over it (emerging from beneath the lower block)
+   and have fully left before the lower block is released and the page carries on to the hero.
+   --closing-h (height of the lower block) is measured by closing-stack.js; 415px is the desktop fallback. */
+.closing-stage{position:relative;--closing-h:415px}
+.closing-stack{position:sticky;bottom:0;z-index:5}
+
+/* the pinned headline block is now the upper area, not a whole screen */
+.closing-stage .reviews-title-wrap{height:calc(100vh - var(--closing-h));height:calc(100svh - var(--closing-h));padding:0}
+
+/* last card must be fully above the window by the moment the lower block is released */
+.closing-stage .reviews-cards-wrap{padding-bottom:calc(100vh - var(--closing-h) + 80px);padding-bottom:calc(100svh - var(--closing-h) + 80px)}

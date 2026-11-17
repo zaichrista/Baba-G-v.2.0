@@ -1,0 +1,6 @@
+/* PIECE 5 — INFINITE SCROLL, HERO = FOOTER (wired in from 5-infinite-scroll-hero-footer.html)
+   Only the Lenis housekeeping rules from the piece are used. The piece's own layout (its hero, link blocks, cities, gallery…) is NOT imported. */
+html.lenis,html.lenis body{height:auto}
+.lenis.lenis-smooth{scroll-behavior:auto!important}
+/* clipped copy of the section under the hero, so the last screen equals the first screen */
+.hero-as-footer-filler{overflow:hidden;position:relative;pointer-events:none}

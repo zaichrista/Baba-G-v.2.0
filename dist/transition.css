@@ -1,0 +1,29 @@
+/* PIECE 1 — PAGE TRANSITION (wired in from 1-crav-page-transition.html)
+   The piece's :root colour variables are scoped to #transition so they can't override the site's own --red/--ink/--yellow/--cream. */
+#transition{
+  --red:#1e1e1e;
+  --orange:#1e1e1e;
+  --yellow:var(--palette-accent);
+  --cream:var(--palette-paper);
+  --ink:#1e1e1e;
+}
+/* while a new page is arriving, keep the screen covered until the enter animation takes over (prevents a flash) */
+html.is-entering #transition{background:var(--yellow)}
+
+/* ---------- the transition overlay ---------- */
+  #transition{
+    position:fixed;inset:0;width:100%;height:100dvh;
+    pointer-events:none;z-index:9999;overflow:hidden;
+  }
+  #transition svg{position:absolute;inset:0;width:100%;height:100%}
+  #transition .label{
+    position:absolute;inset:0;z-index:10;display:flex;align-items:center;justify-content:center;
+    pointer-events:none;opacity:0;
+  }
+  #transition .label span{
+    font-family:'Archivo','Helvetica Neue',Arial,sans-serif;color:var(--ink);text-transform:uppercase;
+    font-size:9vw;line-height:1;
+  }
+  @media (max-width:768px){ #transition .label span{font-size:14vw} }
+
+  @media (prefers-reduced-motion:reduce){ #transition{display:none} }

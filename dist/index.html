@@ -4,8 +4,9 @@
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>El Sabor — A little taste of the good life</title>
 <meta name="description" content="A concept for El Sabor: Spanish-inspired small plates, long evenings, and good company.">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=DM+Sans:wght@400;500;600&family=Italiana&family=Instrument+Serif&family=Kalam:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css"><link rel="stylesheet" href="reference.css"><link rel="stylesheet" href="home-menu.css"><link rel="stylesheet" href="visit.css"><link rel="stylesheet" href="about.css">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css"><link rel="stylesheet" href="reference.css"><link rel="stylesheet" href="home-menu.css"><link rel="stylesheet" href="visit.css"><link rel="stylesheet" href="about.css"><link rel="stylesheet" href="transition.css"><link rel="stylesheet" href="daily-pleasures.css"><link rel="stylesheet" href="reviews.css"><link rel="stylesheet" href="closing-stack.css"><link rel="stylesheet" href="infinite-scroll.css"><link rel="stylesheet" href="palette.css">
+<script>try{if(sessionStorage.getItem("baba-transition-entering")==="1"){document.documentElement.classList.add("is-entering");setTimeout(function(){document.documentElement.classList.remove("is-entering")},4000)}}catch(e){}</script>
 </head>
 <body>
 <a class="skip" href="#story">Skip to content</a>
@@ -14,25 +15,94 @@
 <div class="botanical" aria-hidden="true"></div>
 <div class="square-frame" aria-hidden="true"></div>
 <div class="photo-placeholder photo-one"><span class="photo-no">01 / THE PEOPLE</span><svg viewBox="0 0 100 100" aria-hidden="true"><path d="M25 65Q50 55 75 65M30 70h40M40 64V40m20 24V40M35 30h10v10a5 5 0 0 1-10 0Zm20 0h10v10a5 5 0 0 1-10 0Z"/></svg><span>Your image here</span></div>
+<div class="gold-frame"><img class="baba-mark" src="baba-mark.svg" alt="" aria-hidden="true"><img class="g-mark" src="g-mark.svg" alt="" aria-hidden="true"><img class="lg-mark" src="lebanese-grill-mark.svg" alt="" aria-hidden="true"></div>
 <div class="photo-placeholder photo-two"><span class="photo-no">02 / THE LITTLE THINGS</span><svg viewBox="0 0 100 100" aria-hidden="true"><ellipse cx="50" cy="52" rx="29" ry="22"/><ellipse cx="50" cy="50" rx="23" ry="16"/><circle cx="43" cy="47" r="4"/><circle cx="55" cy="44" r="4"/><circle cx="54" cy="56" r="4"/><circle cx="39" cy="57" r="3"/><circle cx="64" cy="52" r="3"/></svg><span>Your image here</span></div>
-<div class="hero-wordmark"><span class="el">El</span><h1 id="hero-title">SABOR</h1><span class="tapas">Tapas</span></div>
+<h1 id="hero-title" class="sr-only">Baba G Lebanese Grill</h1>
 <div class="photo-placeholder photo-three"><span class="photo-no">03 / THE PLACE</span><svg viewBox="0 0 100 100" aria-hidden="true"><path d="M20 60h60M27 60v18m46-18v18M30 49V27h16v22m10 0V27h16v22M28 38h20m6 0h20M41 60V48h18v12M50 27V16m-8 11h16"/></svg><span>Your image here</span></div>
 <div class="photo-placeholder photo-four"><span class="photo-no">04 / THE CRAFT</span><svg viewBox="0 0 100 100" aria-hidden="true"><path d="M24 57h52a26 18 0 0 1-52 0Zm52 0 12-10M38 42q-8-8 0-16m13 16q-8-8 0-16m13 16q-8-8 0-16M24 78h52"/></svg><span>Your image here</span></div>
-<a href="#about" class="hero-seal" aria-label="Our story"><svg viewBox="0 0 50 65" aria-hidden="true"><path d="M25 3C14 7 3 10 5 30S14 54 25 62C36 54 45 49 45 30S36 7 25 3Z"/><path d="m25 14 3 9 10-1-7 7 5 9-10-4-7 8 1-11-9-5 11-2Z"/><path d="m17 43 8 6 9-7M20 12l-4 6m21 21-3 13M12 34l2 12"/></svg></a><nav class="reference-nav" aria-label="Main navigation"><a href="menu.html">Menu</a><a href="#visit">Book</a><a href="about.html">About</a><a href="#visit">Contact</a><span aria-hidden="true">×</span></nav>
-<a class="hero-next" href="#story" aria-label="Explore our food">↓</a></section>
+<nav class="reference-nav" aria-label="Main navigation"><a href="menu.html">Menu</a><a href="#visit">Book</a><a href="about.html">About</a><a href="#visit">Contact</a></nav>
+<div class="hero-hours"><span class="hero-hours-label">Opening hours</span><p><time datetime="11:00">11:00</time> to <time datetime="21:00">21:00</time></p></div>
+<a class="hero-next" href="#menu" aria-label="Explore our food">↓</a></section>
+<!-- PIECE 2: Daily Pleasures (replaces the menu teaser) -->
+<section class="o-section" id="menu">
+  <div class="o-section_inner">
+    <div class="o-container">
+
+      <div class="c-promotions" id="promotions">
+        <div class="c-promotions_sticky" id="sticky">
+
+          <!-- one colour circle per slide (order = slide order) -->
+          <div class="c-promotions_backsplash" style="--background-color:#1e1e1e"></div>
+          <div class="c-promotions_backsplash" style="--background-color:#f8af07"></div>
+          <div class="c-promotions_backsplash" style="--background-color:#f4ede1"></div>
+          <div class="c-promotions_backsplash" style="--background-color:#1e1e1e"></div>
+          <div class="c-promotions_backsplash" style="--background-color:#f8af07"></div>
+          <div class="c-promotions_backsplash" style="--background-color:#f4ede1"></div>
+
+          <h2 class="u-accessibility-hidden">Daily Pleasures</h2>
+          <svg class="c-promotions_title" viewBox="0 0 736 736" aria-hidden="true" id="curved-title">
+            <defs><path id="circlePath"/></defs>
+            <text fill="currentColor"><textPath href="#circlePath" startOffset="50%" text-anchor="middle">Daily Pleasures</textPath></text>
+          </svg>
+
+          <div class="c-promotions_track" id="track">
+
+            <div class="c-promotions_actions" id="actions">
+              <button class="o-carousel_btn -prev" aria-label="Previous"><svg viewBox="0 0 16 16"><path d="M11.4 1 4.8 7.6a.5.5 0 0 0 0 .8L11.4 15"/></svg></button>
+              <button class="o-carousel_btn -next" aria-label="Next"><svg viewBox="0 0 16 16"><path d="m4.6 15 6.6-6.6a.5.5 0 0 0 0-.8L4.6 1"/></svg></button>
+            </div>
+
+            <!-- ===== SLIDES: replace the PLACEHOLDER images, edit the words ===== -->
+            <div class="c-promotion">
+              <div class="c-promotion_media"><img class="c-promotion_image" alt="" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Ccircle cx='200' cy='200' r='200' fill='%23F4EDE1'/%3E%3Cg stroke='%231e1e1e' stroke-width='3' fill='none'%3E%3Ccircle cx='200' cy='200' r='120'/%3E%3Cpath d='M130 130l140 140M270 130L130 270'/%3E%3C/g%3E%3Ctext x='200' y='350' text-anchor='middle' font-family='sans-serif' font-size='22' fill='%231e1e1e'%3EPLACEHOLDER 1%3C/text%3E%3C/svg%3E"><!-- PLACEHOLDER 1 --></div>
+              <div class="c-promotion_content"><h3>Happy Hour</h3><p class="title-small">Your afternoons, elevated.</p><p>Daily 2–6 pm.</p></div>
+            </div>
+
+            <div class="c-promotion">
+              <div class="c-promotion_media"><img class="c-promotion_image" alt="" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Ccircle cx='200' cy='200' r='200' fill='%23F4EDE1'/%3E%3Cg stroke='%231e1e1e' stroke-width='3' fill='none'%3E%3Ccircle cx='200' cy='200' r='120'/%3E%3Cpath d='M130 130l140 140M270 130L130 270'/%3E%3C/g%3E%3Ctext x='200' y='350' text-anchor='middle' font-family='sans-serif' font-size='22' fill='%231e1e1e'%3EPLACEHOLDER 2%3C/text%3E%3C/svg%3E"><!-- PLACEHOLDER 2 --></div>
+              <div class="c-promotion_content"><h3>Lunch Specials</h3><p class="title-small">Your midday break, made better.</p><p>Daily 11 am–2 pm.</p></div>
+            </div>
+
+            <div class="c-promotion">
+              <div class="c-promotion_media"><img class="c-promotion_image" alt="" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Ccircle cx='200' cy='200' r='200' fill='%23F4EDE1'/%3E%3Cg stroke='%231e1e1e' stroke-width='3' fill='none'%3E%3Ccircle cx='200' cy='200' r='120'/%3E%3Cpath d='M130 130l140 140M270 130L130 270'/%3E%3C/g%3E%3Ctext x='200' y='350' text-anchor='middle' font-family='sans-serif' font-size='22' fill='%231e1e1e'%3EPLACEHOLDER 3%3C/text%3E%3C/svg%3E"><!-- PLACEHOLDER 3 --></div>
+              <div class="c-promotion_content"><h3>Fish &amp; Chips</h3><p class="title-small">Crispy, golden, irresistible.</p><p>Every Tuesday 11 am–10 pm.</p></div>
+            </div>
+
+            <div class="c-promotion">
+              <div class="c-promotion_media"><img class="c-promotion_image" alt="" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Ccircle cx='200' cy='200' r='200' fill='%23F4EDE1'/%3E%3Cg stroke='%231e1e1e' stroke-width='3' fill='none'%3E%3Ccircle cx='200' cy='200' r='120'/%3E%3Cpath d='M130 130l140 140M270 130L130 270'/%3E%3C/g%3E%3Ctext x='200' y='350' text-anchor='middle' font-family='sans-serif' font-size='22' fill='%231e1e1e'%3EPLACEHOLDER 4%3C/text%3E%3C/svg%3E"><!-- PLACEHOLDER 4 --></div>
+              <div class="c-promotion_content"><h3>Pizza Wednesday</h3><p class="title-small">Wednesdays are made for pizza.</p><p>20% off all pizzas in delivery and take out.</p></div>
+            </div>
+
+            <div class="c-promotion">
+              <div class="c-promotion_media"><img class="c-promotion_image" alt="" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Ccircle cx='200' cy='200' r='200' fill='%23F4EDE1'/%3E%3Cg stroke='%231e1e1e' stroke-width='3' fill='none'%3E%3Ccircle cx='200' cy='200' r='120'/%3E%3Cpath d='M130 130l140 140M270 130L130 270'/%3E%3C/g%3E%3Ctext x='200' y='350' text-anchor='middle' font-family='sans-serif' font-size='22' fill='%231e1e1e'%3EPLACEHOLDER 5%3C/text%3E%3C/svg%3E"><!-- PLACEHOLDER 5 --></div>
+              <div class="c-promotion_content"><h3>Unlimited Mussels &amp; Fries</h3><p class="title-small">Indulge without limits!</p><p>Every Wednesday starting at 4 pm.</p></div>
+            </div>
+
+            <!-- ===== /SLIDES ===== -->
+
+            <div class="c-promotion c-promotion--cta">
+              <a class="c-promotion_cta" href="menu.html">See our menu <span aria-hidden="true">&#8599;</span></a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
 <section class="mediterranean" id="story" aria-labelledby="mediterranean-title">
 <h2 id="mediterranean-title">Mediterranean Food.<br>Universal Comfort.</h2>
 <div class="food-pair">
 <figure class="food-feature">
 <div class="food-art food-art-wrap">
-<svg class="food-pattern" viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><path id="wavy-ray" d="M200 200C174 163 155 168 151 134S126 113 119 77S102 49 93 0H159C163 28 184 38 180 70S204 104 195 135S217 170 200 200Z"/></defs><g fill="#cc442b"><use href="#wavy-ray"/><use href="#wavy-ray" transform="rotate(60 200 200)"/><use href="#wavy-ray" transform="rotate(120 200 200)"/><use href="#wavy-ray" transform="rotate(180 200 200)"/><use href="#wavy-ray" transform="rotate(240 200 200)"/><use href="#wavy-ray" transform="rotate(300 200 200)"/></g></svg>
+<svg class="food-pattern" viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><path id="wavy-ray" d="M200 200C174 163 155 168 151 134S126 113 119 77S102 49 93 0H159C163 28 184 38 180 70S204 104 195 135S217 170 200 200Z"/></defs><g fill="#1e1e1e"><use href="#wavy-ray"/><use href="#wavy-ray" transform="rotate(60 200 200)"/><use href="#wavy-ray" transform="rotate(120 200 200)"/><use href="#wavy-ray" transform="rotate(180 200 200)"/><use href="#wavy-ray" transform="rotate(240 200 200)"/><use href="#wavy-ray" transform="rotate(300 200 200)"/></g></svg>
 <div class="food-image-slot" role="img" aria-label="Placeholder for a wrap photo"><svg class="food-silhouette wrap-silhouette" viewBox="0 0 240 240" aria-hidden="true"><g transform="rotate(-18 120 120)"><path d="M73 67Q115 44 162 67L152 177Q120 198 89 177Z"/><ellipse cx="118" cy="67" rx="45" ry="18"/><path class="food-detail" d="m78 110 78 21M86 143l66 18M88 66l13-6 13 11 13-14 17 8M103 75l13-11 12 7 14-9"/></g></svg><span class="image-slot-note">WRAP IMAGE PLACEHOLDER</span></div>
 <a class="food-pill" href="menu.html?section=Wraps">Our Wraps</a></div>
 <figcaption>Your placeholder sentence about our wraps goes here.</figcaption>
 </figure>
 <figure class="food-feature">
 <div class="food-art food-art-bowl">
-<svg class="food-pattern" viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><path id="straight-ray" d="m200 200-25-200h50Z"/></defs><g fill="#fff0d5"><use href="#straight-ray"/><use href="#straight-ray" transform="rotate(30 200 200)"/><use href="#straight-ray" transform="rotate(60 200 200)"/><use href="#straight-ray" transform="rotate(90 200 200)"/><use href="#straight-ray" transform="rotate(120 200 200)"/><use href="#straight-ray" transform="rotate(150 200 200)"/><use href="#straight-ray" transform="rotate(180 200 200)"/><use href="#straight-ray" transform="rotate(210 200 200)"/><use href="#straight-ray" transform="rotate(240 200 200)"/><use href="#straight-ray" transform="rotate(270 200 200)"/><use href="#straight-ray" transform="rotate(300 200 200)"/><use href="#straight-ray" transform="rotate(330 200 200)"/></g></svg>
+<svg class="food-pattern" viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><path id="straight-ray" d="m200 200-25-200h50Z"/></defs><g fill="#fefefa"><use href="#straight-ray"/><use href="#straight-ray" transform="rotate(30 200 200)"/><use href="#straight-ray" transform="rotate(60 200 200)"/><use href="#straight-ray" transform="rotate(90 200 200)"/><use href="#straight-ray" transform="rotate(120 200 200)"/><use href="#straight-ray" transform="rotate(150 200 200)"/><use href="#straight-ray" transform="rotate(180 200 200)"/><use href="#straight-ray" transform="rotate(210 200 200)"/><use href="#straight-ray" transform="rotate(240 200 200)"/><use href="#straight-ray" transform="rotate(270 200 200)"/><use href="#straight-ray" transform="rotate(300 200 200)"/><use href="#straight-ray" transform="rotate(330 200 200)"/></g></svg>
 <div class="food-image-slot" role="img" aria-label="Placeholder for a bowl photo"><svg class="food-silhouette bowl-silhouette" viewBox="0 0 240 240" aria-hidden="true"><path d="M45 100C49 163 76 183 120 183S191 163 195 100Z"/><ellipse cx="120" cy="100" rx="75" ry="30"/><path class="food-detail" d="M60 101q60-38 120 0M74 96l16 8 13-16 19 13 19-10 23 12M81 116q39-12 78 0"/></svg><span class="image-slot-note">BOWL IMAGE PLACEHOLDER</span></div>
 <a class="food-pill" href="menu.html?section=Boxes">Our Bowls</a></div>
 <figcaption>Your placeholder sentence about our bowls goes here.</figcaption>
@@ -40,15 +110,90 @@
 </div>
 <div class="food-signoff"><span aria-hidden="true">✺</span><p>A LITTLE SUNSHINE, A LITTLE COMFORT,<br>AND SOMETHING DELICIOUS IN EVERY BITE.</p></div>
 </section>
-<section class="menu-teaser" id="menu" aria-labelledby="menu-teaser-title"><div class="teaser-copy"><span class="teaser-eyebrow">THE MENU</span><h2 id="menu-teaser-title">Your next<br>favourite awaits.</h2><p>Wraps. Boxes. A little something on the side.</p><a class="teaser-menu-link" href="menu.html">Explore the menu <span aria-hidden="true">↗</span></a></div><div class="teaser-dish"><div class="teaser-rays" aria-hidden="true"></div><svg class="food-silhouette wrap-silhouette" viewBox="0 0 240 240" aria-hidden="true"><g transform="rotate(-18 120 120)"><path d="M73 67Q115 44 162 67L152 177Q120 198 89 177Z"/><ellipse cx="118" cy="67" rx="45" ry="18"/><path class="food-detail" d="m78 110 78 21M86 143l66 18M88 66l13-6 13 11 13-14 17 8M103 75l13-11 12 7 14-9"/></g></svg><span>YOUR FOOD PHOTO HERE</span></div><div class="teaser-picks"><span class="teaser-eyebrow">A LITTLE TASTE</span><a href="menu.html?section=Wraps&amp;item=item-52">Chicken Shawarma Wrap <span aria-hidden="true">↗</span></a><a href="menu.html?section=Boxes&amp;item=item-43">Holy Falafel <span aria-hidden="true">↗</span></a><a href="menu.html?section=Build+your+own">Build your own <span aria-hidden="true">↗</span></a></div></section>
-<section class="about-invitation" id="about" aria-labelledby="about-invitation-title"><div class="about-invitation-top"><span>03 — OUR STORY</span><span>LEBANESE ROOTS. LONDON HEART.</span></div><div class="about-invitation-grid"><div class="about-invitation-copy"><p class="handwritten-note">A little introduction…</p><h2 id="about-invitation-title">Big flavour.<br>Even bigger<br><em>heart.</em></h2><p>There’s more to Baba G than what’s in your wrap.<br>Come and get to know us.</p><a class="about-story-link" href="about.html">Meet Baba G <span aria-hidden="true">↗</span></a></div><div class="about-invitation-image"><div class="about-photo-slot" role="img" aria-label="Placeholder for a photo of the Baba G team and kitchen"><span class="about-photo-label">THE PEOPLE. THE PLACE. THE GOOD STUFF.</span><svg viewBox="0 0 200 180" aria-hidden="true"><path d="M35 142h130M47 142V64h106v78M40 64h120l-12-24H52ZM59 64v21m21-21v21m21-21v21m21-21v21m21-21v21M65 142v-35h30v35m17-30h25v18h-25ZM55 37V22h90v15"/><path d="m87 17 3-8 3 8 8 3-8 3-3 8-3-8-8-3Z"/></svg><span class="about-photo-note">Your team or kitchen photo here</span></div><span class="about-photo-scribble">Good food.<br>Good company.</span></div></div><div class="about-invitation-bottom"><span>HAMMERSMITH, LONDON</span><span>ALWAYS A LITTLE MORE TO THE STORY <span aria-hidden="true">↗</span></span></div></section>
-<section class="find-us" id="visit" aria-labelledby="find-us-title">
-<div class="find-us-inner"><div class="find-us-heading"><span class="find-us-kicker">FIND US</span><h2 id="find-us-title">Follow your<br>appetite.</h2></div>
-<svg class="find-us-route" viewBox="0 0 290 130" aria-hidden="true"><path class="route-line" d="M8 103c30 1 54-35 87-36s47 36 74 17-6-66 27-61 27 49 54 34"/><path d="m235 51 17 5-11 13M20 30l3-9 4 8 9 3-9 4-3 9-4-10-10-3Zm130 78 2-6 3 5 6 2-6 2-2 7-2-6-7-2Z"/><g transform="translate(245 0) rotate(12 15 25)"><path d="M15 4C-2 4-9 17 0 32l15 22 15-22C39 17 32 4 15 4Z"/><circle cx="15" cy="20" r="6"/></g></svg>
-<div class="find-us-address"><p class="location-name">Baba G, Hammersmith</p><address>8 Lyric Square<br>London W6 0DA</address><a href="https://www.google.com/maps/search/?api=1&amp;query=Baba+G+8+Lyric+Square+London+W6+0DA" target="_blank" rel="noopener noreferrer" class="directions-link">This way to the good stuff <span aria-hidden="true">↗</span></a></div></div>
+<div class="closing-stage">
+<!-- PIECE 3: Reviews (replaces the "little introduction" section) -->
+<section class="reviews-scroll-section" id="reviews">
+  <div class="e-con-inner">
+
+    <!-- pinned headline -->
+    <div class="reviews-title-wrap">
+      <div class="reviews-title">
+        <h2>Reviews</h2>
+      </div>
+    </div>
+
+    <!-- scrolling cards -->
+    <div class="reviews-cards-wrap">
+      <div class="reviews-list" id="list">
+
+        <!-- ======= REVIEW 1 (placeholder) ======= -->
+        <div class="review-item"><article class="review-listing-item">
+          <div class="stars" role="img" aria-label="Rating 5 out of 5"></div>
+          <p class="review-quote">Placeholder review — lovely food, quick service and friendly people. I can only recommend it!</p>
+          <p class="review-name">Customer Name</p>
+        </article></div>
+
+        <!-- ======= REVIEW 2 (placeholder, longer) ======= -->
+        <div class="review-item"><article class="review-listing-item">
+          <div class="stars" role="img" aria-label="Rating 5 out of 5"></div>
+          <p class="review-quote">Placeholder review — this is where a longer review goes. Crispy, fresh and exactly what we were hoping for. We came in for a quick bite and ended up staying for a second round. The team remembered our order the next week, which says it all. Highly recommended for families and groups.</p>
+          <p class="review-name">Another Customer</p>
+        </article></div>
+
+        <!-- ======= REVIEW 3 (placeholder) ======= -->
+        <div class="review-item"><article class="review-listing-item">
+          <div class="stars" role="img" aria-label="Rating 5 out of 5"></div>
+          <p class="review-quote">Placeholder review — best in town, hands down. Portions are generous and the sauces are unreal.</p>
+          <p class="review-name">Third Customer</p>
+        </article></div>
+
+        <!-- ======= REVIEW 4 (placeholder, medium) ======= -->
+        <div class="review-item"><article class="review-listing-item">
+          <div class="stars" role="img" aria-label="Rating 5 out of 5"></div>
+          <p class="review-quote">Placeholder review — always hot, always on time, and always a smile at the counter. We order every Friday without fail.</p>
+          <p class="review-name">Fourth Customer</p>
+        </article></div>
+
+        <!-- ======= REVIEW 5 (placeholder) ======= -->
+        <div class="review-item"><article class="review-listing-item">
+          <div class="stars" role="img" aria-label="Rating 5 out of 5"></div>
+          <p class="review-quote">Placeholder review — tastes just like it should. Will be back again very soon.</p>
+          <p class="review-name">Fifth Customer</p>
+        </article></div>
+
+      </div>
+    </div>
+
+  </div>
 </section>
-<section class="opening-hours" id="hours" aria-labelledby="hours-title"><h2 id="hours-title">Opening hours</h2><p><time datetime="11:00">11:00</time> to <time datetime="21:00">21:00</time></p></section>
+<div class="closing-stack">
+<section class="find-us" id="visit" aria-labelledby="find-us-title">
+<div class="find-us-map-layout">
+<div class="find-us-copy"><h2 id="find-us-title" class="sahtein-title">Sahtein!</h2>
+<p class="find-us-context">Lebanese for &ldquo;to your health&rdquo;: what we say as the food hits the table. Come hungry.</p>
+<address class="find-us-address-line">Baba G, 8 Lyric Square<br>Hammersmith, London W6 0DA</address>
+<a href="https://www.google.com/maps/search/?api=1&amp;query=Baba+G+8+Lyric+Square+London+W6+0DA" target="_blank" rel="noopener noreferrer" class="directions-link">Get directions <span aria-hidden="true">&#8599;</span></a></div>
+<div class="find-us-map"><iframe title="Map showing Baba G, 8 Lyric Square, London W6 0DA" src="https://maps.google.com/maps?q=Baba+G+8+Lyric+Square+London+W6+0DA&amp;z=16&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe></div></div>
+</section>
+</div>
+</div>
 </main>
-<footer class="bodega-footer"><a href="#" class="bodega-wordmark" aria-label="Baba G home">Baba G<span class="footer-spark" aria-hidden="true">✳</span></a><nav class="bodega-footer-nav" aria-label="Footer navigation"><div><a href="about.html">About</a><a href="menu.html">Menu</a></div><div><a href="mailto:info@babag.uk?subject=Booking%20enquiry">Reservations</a><a href="mailto:info@babag.uk">Contact</a></div><div><a href="#visit">Find us</a><a href="#hours">Opening hours</a></div></nav></footer>
+<!-- ============ PAGE TRANSITION OVERLAY (piece 1) ============ -->
+<div id="transition" aria-hidden="true">
+  <svg viewBox="0 0 100 100" preserveAspectRatio="none"><path id="layer-red"    fill="#1e1e1e" d="M -1 101 L 101 101 L 101 101 Q 50 101 -1 101 Z"/></svg>
+  <svg viewBox="0 0 100 100" preserveAspectRatio="none"><path id="layer-orange" fill="#1e1e1e" d="M -1 101 L 101 101 L 101 101 Q 50 101 -1 101 Z"/></svg>
+  <svg viewBox="0 0 100 100" preserveAspectRatio="none"><path id="layer-yellow" fill="#f8af07" d="M -1 101 L 101 101 L 101 101 Q 50 101 -1 101 Z"/></svg>
+  <div class="label" id="label"><span id="label-text">Craving...</span></div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.9/dist/lenis.min.js"></script>
+<script src="palette.js"></script>
+<script src="infinite-scroll.js"></script>
+<script src="transition.js"></script>
+<script src="daily-pleasures.js"></script>
+<script src="reviews.js"></script>
+<script src="closing-stack.js"></script>
 
 </body></html>
